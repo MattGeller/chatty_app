@@ -11,6 +11,11 @@ const requireSignin = passport.authenticate('local', {session:false});
 
 //like export default
 module.exports = app => {
+
+    app.get('/', (req, res) => {
+        res.send('<h1>The app worked!</h1>')
+    });
+
     app.post('/signin', requireSignin, Authentication.signin);
     app.post('/signup', Authentication.signin);
     //make routes for whatever we want (will be an axios call on the front end)
