@@ -74,7 +74,10 @@ function validate(vals){
 Signup = reduxForm({
     form: 'signup',
     //pass in the validate function
-    validate
+    validate,
+    initialValues: {
+        color: '#ff0000'
+    }
 })(Signup);
 
 //connect is going to use null and {signup} and return a function, and then call that function with Signup as an argument

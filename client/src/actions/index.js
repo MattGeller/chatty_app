@@ -30,3 +30,22 @@ export function signin(userInfo){
         });
     }
 }
+
+export function jwtSignin(){
+    return dispatch => {
+        axios.get('/auth/get-user', {headers:{authorization: localStorage.getItem('token')}}).then(resp=>{
+            // console.log('Get User Resp:', resp);
+            dispatch({
+                type: types.SIGNIN,
+                payload: resp.data
+            });
+        });
+    }
+}
+
+export function signout(){
+    localStorage.removeItem('token');
+    return {
+        type: types.SIGNOUT
+    }
+}
