@@ -16,7 +16,8 @@ const userSchema = new Schema({
 });
 
 //.pre is what we do right before something happens (so in this case, right before we store a user)
-userSchema.pre('save',(next) => {
+/*this HAS to be a regular(not fat arrow) function because we WANT it to re-bind this to be our user data. Otherwise this will stay as it is in this file which is an empty object*/
+userSchema.pre('save', function(next) {
     const user = this;
     bcrypt.genSalt(10, (err, salt) =>{
         if(err){
@@ -36,7 +37,7 @@ userSchema.pre('save',(next) => {
 });
 
 //we are defining our own custom method on our user's schema (in this case, comparing their salted hashed password to the one we have
-userSchema.methods.comparePasswords = (candidatePassword, callback) => {
+userSchema.methods.comparePasswords = function(candidatePassword, callback) {
     bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
         if(err){
             return callback(err);

@@ -7,17 +7,17 @@ const path = require('path');
 //tell it to use the jwt strategy
 const requireAuth = passport.authenticate('jwt', {session:false});
 //tell it to use local strategy
-const requireSignin = passport.authenticate('local', {session:false});
+const requireSignIn = passport.authenticate('local', {session:false});
 
 //like export default
 module.exports = app => {
 
-    app.get('/', (req, res) => {
-        res.send('<h1>The app worked!</h1>')
-    });
+    // app.get('/', (req, res) => {
+    //     res.send('<h1>The app worked!</h1>')
+    // });
 
-    app.post('/signin', requireSignin, Authentication.signin);
-    app.post('/signup', Authentication.signin);
+    app.post('/auth/signin', requireSignIn, Authentication.signin);
+    app.post('/auth/signup', Authentication.signup);
     //make routes for whatever we want (will be an axios call on the front end)
     app.get('/chat-lobby', requireAuth, (req, res) => {
         console.log('/chat-lobby', req.user);
