@@ -48,12 +48,26 @@ exports.signup = (req, res, next) => {
             if(err){
                 return next(err);
             }
+
+            //backend creates the token to send to the front end. additionally, we will send their username and color too
+            const sendObj = {
+                token: tokenForUser(newUser),
+                username, color
+            };
+
             //if there is no error, return a positive response
-            res.json({token:tokenForUser(newUser)});
+            res.json(sendObj);
         })
     });
 };
 
 exports.signin = (req, res, next) => {
-    res.send({token:tokenForUser(req.user)});
+    //we are sending this whole object to the front end
+    res.send(
+        {
+            token:tokenForUser(req.user),
+            username: req.user.username,
+            color:req.user.color
+        }
+        );
 };
