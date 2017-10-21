@@ -11,7 +11,7 @@ const Nav = props => {
 
             return [
                 <li key="0">
-                    <Link to="chat-lobby">Chat Lobby</Link>
+                    <Link to="/chat-lobby">Chat Lobby</Link>
                 </li>,
                 <li key="1">
                     <Link to="/" onClick={props.signout}>Sign Out</Link>

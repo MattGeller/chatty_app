@@ -1,7 +1,9 @@
 import types from './types';
 import axios from 'axios';
 
-export function signup(userInfo){
+//we need dispatch if the action is or uses an asynchronous call
+
+export function signup(userInfo) {
     return dispatch => {
         axios.post('/auth/signup', userInfo).then(resp => {
             console.log('Resp from server:', resp);
@@ -16,7 +18,7 @@ export function signup(userInfo){
     }
 }
 
-export function signin(userInfo){
+export function signin(userInfo) {
     return dispatch => {
         axios.post('/auth/signin', userInfo).then(resp => {
             console.log('Signin Resp:', resp);
@@ -31,9 +33,9 @@ export function signin(userInfo){
     }
 }
 
-export function jwtSignin(){
+export function jwtSignin() {
     return dispatch => {
-        axios.get('/auth/get-user', {headers:{authorization: localStorage.getItem('token')}}).then(resp=>{
+        axios.get('/auth/get-user', {headers: {authorization: localStorage.getItem('token')}}).then(resp => {
             // console.log('Get User Resp:', resp);
             dispatch({
                 type: types.SIGNIN,
@@ -43,9 +45,26 @@ export function jwtSignin(){
     }
 }
 
-export function signout(){
+export function signout() {
     localStorage.removeItem('token');
     return {
         type: types.SIGNOUT
+    }
+}
+
+export function getRoomList() {
+    return dispatch => {
+        axios.get('/api/room-list',
+            {
+                headers: {authorization: localStorage.token}
+            }
+        )
+            .then(resp => {
+                // console.log('Resp:', resp);
+                dispatch({
+                    type: types.GET_ROOM_LIST,
+                    payload: resp.data
+                });
+            });
     }
 }
