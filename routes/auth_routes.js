@@ -1,13 +1,9 @@
 const Authentication = require('../controllers/authentication');
-const passportService = require('../services/passport');
-const passport = require('passport');
+const {requireSignIn, requireAuth} = require('./auth');
 //path is built in to node, one of its core things
 const path = require('path');
 
-//tell it to use the jwt strategy
-const requireAuth = passport.authenticate('jwt', {session:false});
-//tell it to use local strategy
-const requireSignIn = passport.authenticate('local', {session:false});
+
 
 //like export default
 module.exports = app => {
